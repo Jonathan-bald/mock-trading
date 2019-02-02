@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 public class MockTradingDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdcTemplate;
-    public Double getPrice(String symbol) {
-        namedParameterJdcTemplate.query()
 
+//    public Double getPrice( String symbol ) {
+//        // namedParameterJdcTemplate.query()
+//
+//    }
 }
