@@ -27,8 +27,6 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.4.RELEASE'
-	compile("org.springframework.boot:spring-boot-starter-actuator")
-	compile("org.springframework.boot:spring-boot-starter-cloud-connectors")
-	compile("org.springframework.cloud:spring-cloud-starter-feign")
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.1.0.RELEASE'
 
 }

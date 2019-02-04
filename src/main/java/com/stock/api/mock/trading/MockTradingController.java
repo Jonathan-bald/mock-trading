@@ -14,8 +14,8 @@ public class MockTradingController {
     @Autowired
     private StockApiService StockService;
     @RequestMapping("/hello")
-    public void helloWorld(@RequestParam(name = ("Message")) String Message) {
-        System.out.print(StockService.getSymbolInfo("APPL", "Q64v5wN7ZmwadOpYWwAbHF61fXEMgpAjQJlDLpQ0KChJ4MqOkXcC38zsZ2iv"));
+    public StockApiResponse helloWorld(@RequestParam(name = ("Symbol")) String Symbol) {
+        return(StockService.getSymbolInfo(Symbol, "Q64v5wN7ZmwadOpYWwAbHF61fXEMgpAjQJlDLpQ0KChJ4MqOkXcC38zsZ2iv"));
 
     }
 }
