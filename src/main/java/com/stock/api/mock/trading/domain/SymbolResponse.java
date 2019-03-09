@@ -2,13 +2,14 @@ package com.stock.api.mock.trading.domain;
 
 public class SymbolResponse {
     public String symbol;
-    public String price;
+    public Double price;
+    public Double quantity;
 
-    @Override
-    public String toString() {
-        return "SymbolResponse{" +
-                "symbol='" + symbol + '\'' +
-                ", price='" + price + '\'' +
-                '}';
+    public SymbolResponse(String symbol, Double price, Double quantity) {
+        this.symbol = symbol;
+        this.price = price;
+        this.quantity = quantity;
     }
+
+    public SymbolResponse() {}
 }

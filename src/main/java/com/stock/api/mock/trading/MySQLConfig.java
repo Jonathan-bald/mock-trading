@@ -12,9 +12,9 @@ public class MySQLConfig {
     public DataSource mysqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/springjdbc");
-        dataSource.setUsername("guest_user");
-        dataSource.setPassword("guest_password");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/stocktrading");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
 
         return dataSource;
     }
