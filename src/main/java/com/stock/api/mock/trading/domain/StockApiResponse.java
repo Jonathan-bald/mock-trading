@@ -5,6 +5,8 @@ import java.util.List;
 public class StockApiResponse {
     public List<SymbolResponse> data;
 
+    public Double totalValue;
+
     @Override
     public String toString() {
         return "StockApiResponse{" +
