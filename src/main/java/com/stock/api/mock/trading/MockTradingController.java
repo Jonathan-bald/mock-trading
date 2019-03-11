@@ -46,14 +46,21 @@ public class MockTradingController {
     @GetMapping("/bankRoll")
     public ResponseEntity<?> createNewPosition(@RequestParam(value = "userId") String userId) {
         Double totalBankRoll = mockTradingService.getTotalBankRoll(userId);
-        if(totalBankRoll == null) {
+        if (totalBankRoll == null) {
+            return ResponseEntity.badRequest().body(new BadRequestResponse("Could not find bankroll for user: " + userId));
+        }
+        return ResponseEntity.ok(new BankrollResponse(totalBankRoll));
+    }
+
+    @DeleteMapping("/positions")
+    public ResponseEntity<?> deletePosition(@RequestParam(value = "userId") String userId, @Valid @RequestBody PositionRequest positionRequest) {
+        Double totalBankRoll = mockTradingService.getTotalBankRoll(userId);
+        if (totalBankRoll == null) {
             return ResponseEntity.badRequest().body(new BadRequestResponse("Could not find bankroll for user: " + userId));
         }
         return ResponseEntity.ok(new BankrollResponse(totalBankRoll));
     }
 }
-
-
 //    REST CALLS:
 //  Cash out of position
 // 1: Call STOCK API to get todays price

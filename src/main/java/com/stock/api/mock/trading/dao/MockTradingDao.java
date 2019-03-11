@@ -56,4 +56,8 @@ public class MockTradingDao {
 
         namedParameterJdcTemplate.update(UPDATE_BANK_ROLL_FOR_USER_ID, parameters);
     }
+
+    public void deletePositionForUserID(String userID, PositionRequest positionRequest, double price, double newBankRoll) {
+
+    }
 }
