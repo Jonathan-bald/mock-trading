@@ -34,7 +34,7 @@ public class MockTradingService {
             //Add that with the users quantity to their total value
             totalValue = totalValue + (stockApiResponse.data.get(0).price * symbolResponse.quantity);
         }
-        response.totalValue = totalValue;
+        response.totalValue = Math.round(totalValue * 100.0) / 100.0;
         return response;
     }
 
@@ -59,11 +59,11 @@ public class MockTradingService {
         double fundsAvailable = getTotalBankRoll(userId);
         if(doesUserHaveSufficientFunds(userId, fundsAvailable, fundsRequired)) {
             //They have sufficient funds to create the new position
-            mockTradingDao.createNewPosition(userId, positionRequest, price);
+            long positionId = mockTradingDao.createNewPosition(userId, positionRequest, price);
             //Remove funds required for new position from the users bankroll
             mockTradingDao.updateBankrollForUserId(userId, fundsAvailable - fundsRequired);
             //Create response confirming to the user the position was created
-            return new SymbolResponse(positionRequest.symbol, price, positionRequest.quantity);
+            return new SymbolResponse(positionId, positionRequest.symbol, price, positionRequest.quantity);
         } else {
             throw new BadRequestException("Bankroll is not sufficient. Funds required: " + fundsRequired + " Funds available: " + fundsAvailable);
         }

@@ -3,7 +3,11 @@ package com.stock.api.mock.trading.dao;
 import com.stock.api.mock.trading.domain.SymbolResponse;
 import com.stock.api.mock.trading.request.PositionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
@@ -17,9 +21,9 @@ public class MockTradingDao {
     private NamedParameterJdbcTemplate namedParameterJdcTemplate;
 
     //This will retrieve all the rows with symbol and price
-    private static String GET_ALL_POSITIONS = "SELECT symbol, price, quantity FROM positions WHERE userId = :userId";
+    private static String GET_ALL_POSITIONS = "SELECT id, symbol, price, quantity FROM positions WHERE userId = :userId";
 
-    private static String GET_POSITION_BY_SYMBOL = "SELECT symbol, price, quantity FROM positions WHERE userId = :userId AND symbol = :symbol";
+    private static String GET_POSITION_BY_SYMBOL = "SELECT id, symbol, price, quantity FROM positions WHERE userId = :userId AND symbol = :symbol";
 
     //Add new row into position table with symbol, price and quantity values
     private static String CREATE_NEW_POSITION = "INSERT INTO positions (symbol, price, quantity, userId) VALUES (:symbol, :price, :quantity, :userId)";
@@ -75,14 +79,17 @@ public class MockTradingDao {
         return namedParameterJdcTemplate.query(GET_POSITION_BY_SYMBOL, parameters, new PositionsRowMapper());
     }
 
-    public void createNewPosition(String userId, PositionRequest positionRequest, double price) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("symbol", positionRequest.symbol);
-        parameters.put("price", price);
-        parameters.put("quantity", positionRequest.quantity);
-        parameters.put("userId", userId);
+    public long createNewPosition(String userId, PositionRequest positionRequest, double price) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("symbol", positionRequest.symbol);
+        parameters.addValue("price", price);
+        parameters.addValue("quantity", positionRequest.quantity);
+        parameters.addValue("userId", userId);
 
-        namedParameterJdcTemplate.update(CREATE_NEW_POSITION, parameters);
+        namedParameterJdcTemplate.update(CREATE_NEW_POSITION, parameters, keyHolder);
+
+        return keyHolder.getKey().longValue();
     }
 
     public Double getBankRollByUserId(String userId) {

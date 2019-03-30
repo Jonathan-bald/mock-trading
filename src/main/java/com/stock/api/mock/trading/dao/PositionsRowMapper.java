@@ -14,9 +14,10 @@ public class PositionsRowMapper implements RowMapper<SymbolResponse> {
     @Override
     public SymbolResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
         // In our result set we will have access to all columns returned in the SQL query (symbol, price) and we will convert this into a our object symbol response
+        long id = rs.getLong("id");
         String symbol = rs.getString("symbol");
         Double price = rs.getDouble("price");
         Double quantity = rs.getDouble("quantity");
-        return new SymbolResponse(symbol, price, quantity);
+        return new SymbolResponse(id, symbol, price, quantity);
     }
 }
