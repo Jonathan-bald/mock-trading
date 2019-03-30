@@ -34,7 +34,7 @@ public class MockTradingService {
             //Add that with the users quantity to their total value
             totalValue = totalValue + (stockApiResponse.data.get(0).price * symbolResponse.quantity);
         }
-        response.totalValue = Math.round(totalValue * 100.0) / 100.0;
+        response.totalValue = roundToTwoDecimalPlaces(totalValue);
         return response;
     }
 
@@ -92,7 +92,7 @@ public class MockTradingService {
     public double getTotalBankRoll(String userId) throws BadRequestException {
         Double totalBankRoll = mockTradingDao.getBankRollByUserId(userId);
         if(totalBankRoll != null) {
-            return totalBankRoll;
+            return roundToTwoDecimalPlaces(totalBankRoll);
         }
         throw new BadRequestException("Cannot find bankroll for user " + userId);
     }
@@ -100,5 +100,9 @@ public class MockTradingService {
     private boolean doesUserHaveSufficientFunds(String userId, Double fundsAvailable, double fundsRequired) {
         //Does the user have enough funds for this transaction?
         return fundsAvailable >= fundsRequired;
+    }
+
+    private static double roundToTwoDecimalPlaces(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 }

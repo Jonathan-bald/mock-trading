@@ -30,7 +30,7 @@ public class MockTradingController {
         return ResponseEntity.status(201).body(symbolResponse);
     }
 
-    @GetMapping("/bankRoll")
+    @GetMapping("/bankroll")
     public ResponseEntity<?> createNewPosition(@RequestParam(value = "userId") String userId) throws BadRequestException {
         double totalBankRoll = 0;
         totalBankRoll = mockTradingService.getTotalBankRoll(userId);
