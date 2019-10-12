@@ -14,10 +14,15 @@ import java.util.List;
 @Service
 public class MockTradingService {
 
-    @Autowired
+
     private MockTradingDao mockTradingDao;
-    @Autowired
     private StockApiService stockApiService;
+
+    @Autowired
+    public MockTradingService(MockTradingDao mockTradingDao, StockApiService stockApiService) {
+        this.mockTradingDao = mockTradingDao;
+        this.stockApiService = stockApiService;
+    }
 
     private static final String API_TOKEN = "Q64v5wN7ZmwadOpYWwAbHF61fXEMgpAjQJlDLpQ0KChJ4MqOkXcC38zsZ2iv";
 
